@@ -12,12 +12,10 @@ function LoginPage(props) {
    const [Password, setPassword] = useState("")
 
    const onEmailHandler = (event) => {
-
       setEmail(event.currentTarget.value)
    }
 
    const onPasswordHandler = (event) => {
-
       setPassword(event.currentTarget.value)
    }
 
