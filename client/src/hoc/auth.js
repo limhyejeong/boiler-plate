@@ -12,12 +12,32 @@ export default function (SpecificComponent, option, adminRoute = null) {
 
       useEffect(() => {
 
-         dispatch(auth())
+         dispatch(auth()).then(response => {
+            console.log(response)
 
-         Axios.get('/api/users/auth')
+            // 로그인 하지 않은 상태
+            if (!response.payload.isAuth) {
+               if (option) { 
+                  props.history.push('/login')
+               }
+            } else {
+               // 로그인 한 상태
+               if (adminRoute && !response.payload.isAdmin) {
+                  props.history.push('/')
+               } else { // 로그인한 유저가 출입 가능
+                  if (option === false)
+                     props.history.push('/')
+               }
+            }
+         })
+
+         // Axios.get('/api/users/auth')
 
       }, [])
 
+      return (
+         <SpecificComponent />
+      )
    }
 
    return AuthenticationCheck
